@@ -22,10 +22,14 @@ a + b;
 """
 
 from lark import Lark
+import os
+
+current_dir = f'{os.getcwd()}/class_example/'
+grammar_file = 'expressionGrammarFull.lark'
 
 # Use LALR rather than Earley
 # LALR works best with left recursive grammars
-parser = Lark.open("expressionGrammarFull.lark", parser="lalr")
+parser = Lark.open(current_dir + grammar_file, parser="lalr")
 parseTree = parser.parse(text)
 print(parseTree)
 print(parseTree.pretty())
