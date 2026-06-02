@@ -1,0 +1,49 @@
+# Note that this grammar is left recursive (so left associative)
+# LALR can handle left recursion - and in fact does it better
+
+# There can only be one line for each non-terminal so we use |
+#   either on a single line or with additional lines
+# Also note that non-terminals must be all lowercase
+
+start: statements
+
+statements: statement ";"
+        | statements statement ";"
+
+statement: assignment
+        | expr
+
+assignment: NAME "=" expr
+
+# Note that if I add "| term" as another rule, it becomes ambiguous
+#   and I get Shift/Reduce warnings when it tries to build the LR table
+#   This is exactly the behavior I should get
+expr: expr addop term
+    | expr subop term
+    | term
+
+addop: "+"
+subop: "-"
+
+term: term multop factor
+    | term divop factor
+    | factor
+
+multop: "*"
+divop: "/"
+
+factor: leftparen expr rightparen | NUMBER | NAME
+
+leftparen: "("
+rightparen: ")"
+
+# The standard definition of a number
+%import common.NUMBER
+# Or ebnf for ther number terminal
+# NUMBER: ("0".."9")+
+
+%import common.CNAME -> NAME
+
+# To not worry about whitespace in the parser (normally a lexer would take that out)
+%import common.WS
+%ignore WS
