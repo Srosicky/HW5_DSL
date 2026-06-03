@@ -1,40 +1,37 @@
 start: statements
 
-statements: statements forwardCommand
-        | statements rotateCommand
-        | statements liftPenCommand
-        | statements downPenCommand
-        | statements changeColorCommand
-        | statements repeatCommand
-        | forwardCommand
+statements: statements command
+        | command
+
+command: forwardCommand
         | rotateCommand
         | liftPenCommand
         | downPenCommand
         | changeColorCommand
         | repeatCommand
 
-forwardCommand:
+forwardCommand:    
         "forward" NUMBER
 
 rotateCommand:
-        "rotate" NUMBER
+        "rotate"  NUMBER
 
 liftPenCommand:
         "penup"
 
-downPenCommand:
+downPenCommand:    
         "pendown"
 
-changeColorCommand:
-        "color" CNAME
+changeColorCommand: 
+        "color"  COLOR
+
+repeatCommand:
+        "repeat"  INT "{" statements "}"
 
 
-repeatCommand: "repeat" NUMBER leftparen statements rightparen
-
-leftparen: "("
-rightparen: ")"
-
+COLOR: /[a-zA-Z]+/
 %import common.NUMBER
-%import common.CNAME 
+%import common.INT
 %import common.WS
 %ignore WS
+%ignore /\#[^\n]*/
