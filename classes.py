@@ -4,7 +4,6 @@ import math
 from lark import Transformer
 from dataclasses import dataclass
 from typing import List
-from helpers import get_color
 
 
 # AST class
@@ -82,7 +81,7 @@ class DrawingTransformer(Transformer):
 # Pen Class
 class DrawingPen:
     def __init__(self):
-        self.color = "black"
+        self.color = dudraw.BLACK
         self.direction = 0.0
         self.x = 0.5
         self.y = 0.5
@@ -112,4 +111,5 @@ class DrawingPen:
         self.is_down = True
 
     def change_color(self, color_name: str):
+        from helpers import get_color
         self.color = get_color(color_name)

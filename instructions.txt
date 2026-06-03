@@ -1,7 +1,9 @@
 pendown
+color red
+forward 0.2
+rotate 120
 color blue
-repeat 3 {
-    forward 50
-    rotate 120
-}
-penup
+forward 0.2
+rotate 120
+color green
+forward 0.2

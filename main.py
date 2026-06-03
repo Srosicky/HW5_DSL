@@ -1,6 +1,7 @@
 from lark import Lark
 from classes import DrawingTransformer, DrawingPen
 from helpers import evaluate_program
+import dudraw
 
 # load in text file
 with open("/Users/sophiarosicky/Desktop/COMP 3351/Homeworks/HW5_DSL/instructions.txt", "r") as f:
@@ -15,6 +16,12 @@ print(parse_tree.pretty())
 ast = DrawingTransformer().transform(parse_tree)
 print(ast)
 
+# set up the canvas!
+dudraw.set_canvas_size(600, 600)
+dudraw.clear(dudraw.WHITE)
+
 # evaluate the program
 pen = DrawingPen()
 evaluate_program(ast, pen)
+
+dudraw.show(1000000)
