@@ -6,6 +6,12 @@ statements: statements forwardCommand
         | statements downPenCommand
         | statements changeColorCommand
         | statements repeatCommand
+        | forwardCommand
+        | rotateCommand
+        | liftPenCommand
+        | downPenCommand
+        | changeColorCommand
+        | repeatCommand
 
 forwardCommand:
         "forward" NUMBER
