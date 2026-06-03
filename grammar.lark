@@ -26,7 +26,7 @@ downPenCommand:
         "pendown"
 
 changeColorCommand:
-        "color" NAME
+        "color" CNAME
 
 
 repeatCommand: "repeat" NUMBER leftparen statements rightparen
@@ -35,6 +35,6 @@ leftparen: "("
 rightparen: ")"
 
 %import common.NUMBER
-%import common.CNAME -> NAME
+%import common.CNAME 
 %import common.WS
 %ignore WS

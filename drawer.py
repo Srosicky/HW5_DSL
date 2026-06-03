@@ -22,11 +22,11 @@ class Node:
 
 @dataclass
 class valNode:
-    number = float
+    number : float
 
 @dataclass
 class colorNode:
-    name = str
+    name : str
 
 @dataclass
 class forwardNode:
@@ -47,11 +47,14 @@ class repeatNode:
 from lark import Transformer
 
 class ExpressionTransformer(Transformer):
-    def Number(self, n):
-        return valNode(float(n))
-    
-    def NAME(self, n):
-        return colorNode(str(n))
+    def forwardCommand(self, children):
+        return forwardNode(float(children[0]))
+
+    def rotateCommand(self, children):
+        return rotateNode(float(children[0]))
+
+    def repeatCommand(self, children):
+        return repeatNode(int(children[0]), children[1])
     
     def start(self, children):
         return children[0]
@@ -106,4 +109,6 @@ def evaluate(node, pen):
     elif isinstance(node, rotateNode):
         pen.rotate(node.angle)
 
+    elif isinstance(node, colorNode):
+        pen.ChangeColor(node.color)
     ##etc
