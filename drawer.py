@@ -94,3 +94,16 @@ class DrawingPen():
     def changeColor(Color):
         pass
 
+
+
+#Evaluator function:
+#Translates the AST to pen class calls:
+
+def evaluate(node, pen):
+    if isinstance(node, forwardNode):
+        pen.move_forward(node.distance)
+
+    elif isinstance(node, rotateNode):
+        pen.rotate(node.angle)
+
+    ##etc
