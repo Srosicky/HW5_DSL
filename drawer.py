@@ -1,14 +1,75 @@
 import dudraw
 from lark import Lark
 
+#Based on the grammar in grammar.lark, 
+#This should parse it and create and AST that can then be used to draw with
 
+text = "repeat 30 (pendown forward 20 rotate 30 forward 10)"
 
-
-text = "hello, I am sophie and I am doing this homework!"
-
-parser = Lark.open("expressionGrammar.lark", parser="lalr")
+parser = Lark.open("grammar.lark", parser="lalr")
 parseTree = parser.parse(text)
 print(parseTree)
 print(parseTree.pretty())
 
 
+#Now the python dataclasses
+
+from dataclasses import dataclass
+
+@dataclass
+class Node:
+    pass
+
+@dataclass
+class valNode:
+    number = float
+
+@dataclass
+class colorNode:
+    name = str
+
+@dataclass
+class forwardNode:
+    distance: float
+
+@dataclass
+class rotateNode:
+    angle: float
+
+@dataclass
+class repeatNode:
+    numRepeats: int
+    bodyCmd: list
+
+
+##This is the transformer, which allows us to use our classes
+
+from lark import Transformer
+
+class ExpressionTransformer(Transformer):
+    def Number(self, n):
+        return valNode(float(n))
+    
+    def NAME(self, n):
+        return colorNode(str(n))
+    
+    def start(self, children):
+        return children[0]
+    
+    def statements(self, children):
+        # Flatten the recursive list into a single Python list
+        flat_list = []
+        for child in children:
+            if isinstance(child, list):
+                flat_list.extend(child)
+            elif isinstance(child, Node):
+                flat_list.append(child)
+        return flat_list
+
+    def statement(self, children):
+        return children[0]
+    
+
+
+###Now the drawing time:
+#Pen

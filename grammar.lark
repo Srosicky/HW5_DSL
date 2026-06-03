@@ -1,0 +1,34 @@
+start: statements
+
+statements: statements forwardCommand
+        | statements rotateCommand
+        | statements liftPenCommand
+        | statements downPenCommand
+        | statements changeColorCommand
+        | statements repeatCommand
+
+forwardCommand:
+        "forward" NUMBER
+
+rotateCommand:
+        "rotate" NUMBER
+
+liftPenCommand:
+        "penup"
+
+downPenCommand:
+        "pendown"
+
+changeColorCommand:
+        "color" NAME
+
+
+repeatCommand: "repeat" NUMBER leftparen statements rightparen
+
+leftparen: "("
+rightparen: ")"
+
+%import common.NUMBER
+%import common.CNAME -> NAME
+%import common.WS
+%ignore WS
