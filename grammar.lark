@@ -3,35 +3,25 @@ start: statements
 statements: statements command
         | command
 
-command: forwardCommand
-        | rotateCommand
-        | liftPenCommand
-        | downPenCommand
-        | changeColorCommand
-        | repeatCommand
+command: forward_cmd
+        | rotate_cmd
+        | penup_cmd
+        | pendown_cmd
+        | color_cmd
+        | repeat_cmd
 
-forwardCommand:    
-        "forward" NUMBER
-
-rotateCommand:
-        "rotate"  NUMBER
-
-liftPenCommand:
-        "penup"
-
-downPenCommand:    
-        "pendown"
-
-changeColorCommand: 
-        "color"  COLOR
-
-repeatCommand:
-        "repeat"  INT "{" statements "}"
-
+forward_cmd: "forward" NUMBER
+rotate_cmd:  "rotate"  NUMBER
+penup_cmd:   "penup"
+pendown_cmd: "pendown"
+color_cmd:   "color"   COLOR
+repeat_cmd:  "repeat"  INT "{" statements "}"
 
 COLOR: /[a-zA-Z]+/
+COMMENT: /#[^\n]*/
+
 %import common.NUMBER
 %import common.INT
 %import common.WS
 %ignore WS
-%ignore /\#[^\n]*/
+%ignore COMMENT
