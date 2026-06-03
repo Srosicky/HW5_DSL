@@ -72,4 +72,25 @@ class ExpressionTransformer(Transformer):
 
 
 ###Now the drawing time:
-#Pen
+#
+
+class DrawingPen():
+    def __init__(self):
+        self.color = "BLACK"    # Instance attribute
+        self.direction = 25.0
+
+    def moveForward():
+        pass
+
+    def rotate(degrees):
+        pass
+
+    def penup():
+        pass
+
+    def penDown():
+        pass 
+
+    def changeColor(Color):
+        pass
+
