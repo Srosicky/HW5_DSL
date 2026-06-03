@@ -1,7 +1,10 @@
+import dudraw
+import math
+
+from lark import Transformer
 from dataclasses import dataclass
 from typing import List
-import dudraw
-from lark import Transformer
+from helpers import get_color
 
 
 # AST class
@@ -86,10 +89,21 @@ class DrawingPen:
         self.is_down = False
 
     def move_forward(self, distance):
-        pass  # TODO: implement with dudraw
+        # compute endpoint using current direction
+        angle_rad = math.radians(self.direction)
+        new_x = self.x + distance * math.cos(angle_rad)
+        new_y = self.y + distance * math.sin(angle_rad)
+
+        # only draw if the pen is already down...
+        if self.is_down:
+            dudraw.set_pen_color(self.color)
+            dudraw.line(self.x, self.y, new_x, new_y)
+        
+        self.x = new_x
+        self.y = new_y
 
     def rotate(self, degrees):
-        pass  # TODO: implement with dudraw
+        self.direction = (self.direction + degrees) % 360
 
     def pen_up(self):
         self.is_down = False
@@ -97,6 +111,5 @@ class DrawingPen:
     def pen_down(self):
         self.is_down = True
 
-    def change_color(self, color):
-        self.color = color
-        # TODO: dudraw.set_pen_color(...)
+    def change_color(self, color_name: str):
+        self.color = get_color(color_name)
