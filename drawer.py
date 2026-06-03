@@ -82,10 +82,10 @@ class DrawingPen():
         self.color = "BLACK"    # Instance attribute
         self.direction = 25.0
 
-    def moveForward():
+    def moveForward(self, distance):
         pass
 
-    def rotate(degrees):
+    def rotate(self, degrees):
         pass
 
     def penup():
@@ -94,7 +94,7 @@ class DrawingPen():
     def penDown():
         pass 
 
-    def changeColor(Color):
+    def changeColor(self, Color):
         pass
 
 
@@ -111,4 +111,8 @@ def evaluate(node, pen):
 
     elif isinstance(node, colorNode):
         pen.ChangeColor(node.color)
-    ##etc
+    #repeat case, for the body text!
+    elif isinstance(node, repeatNode):
+        for i in range(node.numRepeats):
+            for cmd in node.bodyCmd:
+                evaluate(cmd, pen)
